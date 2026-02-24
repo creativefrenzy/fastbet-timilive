@@ -3,3 +3,4 @@
 .env.example
 package-lock.json
 logs.txt
+src/config/google-services.json

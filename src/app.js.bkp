@@ -1,0 +1,122 @@
+import express from 'express';
+import helmet from 'helmet';
+import cors from 'cors';
+import apiRouter from './routes/api.js';
+// import healthRouter from './routes/health.js';
+
+const app = express();
+
+// const allowedIPs = (process.env.ALLOWED_IPS || "")
+//   .split(",")
+//   .map(i => i.trim())
+//   .filter(Boolean);
+
+// // Function to get client IP safely (supports proxy headers)
+// function getClientIP(req) {
+//   // If behind proxy (e.g., Cloudflare, Nginx)
+//   return (
+//     req.headers["x-forwarded-for"]?.split(",").shift()?.trim() ||
+//     req.socket?.remoteAddress ||
+//     ""
+//   );
+// }
+
+/* ---------- CORS CONFIG ---------- */
+
+// // Define allowed origins (IP or domain, with protocol)
+// const allowedOrigins = [
+//   "http://127.0.0.1:3001",
+//   "http://localhost:3001",
+//   "https://152.58.183.15",       // example IP
+//   "https://partnergame.com",    // example domain
+// ];
+
+// // Dynamic origin check
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     // Allow requests with no origin (like mobile apps or curl)
+//     if (!origin) return callback(null, true);
+
+//     if (allowedOrigins.includes(origin)) {
+//       return callback(null, true);
+//     } else {
+//       return callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   methods: ["POST"], // restrict to POST if you want
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   credentials: true, // only if you need cookies/auth
+// };
+
+// // Apply CORS
+// app.use(cors(corsOptions));
+
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     // allow if origin allowed, or if no origin (like mobile app)
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       return callback(null, true);
+//     }
+//     return callback(new Error("Not allowed by CORS"));
+//   },
+//   credentials: true,
+//   methods: ["POST"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+// };
+
+// // CORS middleware
+// app.use((req, res, next) => {
+//   const clientIP = getClientIP(req);
+//   const isAllowedIP = allowedIPs.includes(clientIP);
+
+//   if (isAllowedIP) {
+//     // Bypass CORS restriction if IP allowed
+//     return cors()(req, res, next);
+//   }
+
+//   // Otherwise, apply origin-based CORS restriction
+//   return cors(corsOptions)(req, res, next);
+// });
+
+// Enable CORS for all origins (adjust as needed)
+app.use(cors());
+
+// Only accept application/json like the PHP code
+app.use(express.json({ type: 'application/json' }));
+
+// Basic hardening
+app.use(helmet());
+
+// Route prefix
+app.use('/api', apiRouter);
+
+// health check
+// app.use('/health', healthRouter);
+
+// 404 handler — runs only if no route matched above
+app.use((req, res) => {
+  res.status(404).json({
+    code: 1,
+    message: "Not Found"
+  });
+});
+
+// Global error handler (optional, catches thrown errors)
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({
+    code: 1,
+    message: "Internal server error"
+  });
+});
+
+// Fallback for other methods
+// app.use((req, res) => {
+//   res.set('Content-Type', 'application/json');
+//   return res.status(200).json({
+//     code: 1,
+//     message: 'Invalid request method. Only POST is supported'
+//   });
+// });
+
+export default app;

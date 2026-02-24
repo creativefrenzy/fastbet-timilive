@@ -1,5 +1,5 @@
 {
-  "name": "zeeplive-third-party-game",
+  "name": "fastbet-timilive",
   "version": "1.0.0",
   "description": "Express.js port of a PHP endpoint with signature verification and MySQL queries.",
   "main": "src/index.js",

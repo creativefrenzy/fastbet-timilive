@@ -3,10 +3,10 @@ os: linux
 
 files:
   - source: /
-    destination: /home/ubuntu/fastbet-zeeplive
+    destination: /home/ubuntu/fastbet-timilive
 
 permissions:
-  - object: /home/ubuntu/fastbet-zeeplive/scripts
+  - object: /home/ubuntu/fastbet-timilive/scripts
     pattern: "*.sh"
     owner: ubuntu
     group: ubuntu
