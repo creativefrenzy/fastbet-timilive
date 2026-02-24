@@ -4,11 +4,22 @@ import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 const serviceAccount = require("./google-services.json");
+const mainServiceAccount = require("./timilive-google-services.json");
 
 // ---- helper: init or reuse named app ----
 function getOrInitApp(name, databaseURL) {
   const existing = admin.apps.find((a) => a.name === name);
   if (existing) return existing;
+
+  if(name == 'timilive-car-game'){
+      return admin.initializeApp(
+      {
+        credential: admin.credential.cert(mainServiceAccount),
+        databaseURL,
+      },
+      name
+    );
+  }
 
   return admin.initializeApp(
     {
@@ -20,7 +31,7 @@ function getOrInitApp(name, databaseURL) {
 }
 
 // ---- Init 2 separate Firebase RTDB apps ----
-const zeepliveApp = getOrInitApp(
+const timiliveApp = getOrInitApp(
   "timilive-car-game",
   "https://timilive-car-game.asia-southeast1.firebasedatabase.app/"
 );
@@ -31,7 +42,7 @@ const globalApp = getOrInitApp(
 );
 
 // ---- Separate DB instances ----
-const cargame_db = admin.database(zeepliveApp);
+const cargame_db = admin.database(timiliveApp);
 const cargame_global_db = admin.database(globalApp);
 
 // ---- Read helpers ----
