@@ -1,0 +1,9 @@
+
+2026-01-24 13:16:03 RespErr: {"status":false,"message":"Internal server error","error":"Cannot read properties of null (reading 'name')"}
+2026-01-24 13:17:54 RespErr: {"status":false,"message":"Internal server error","error":"Cannot read properties of null (reading 'name')"}
+2026-01-24 13:20:29 RespErr: {"status":false,"message":"Internal server error","error":"Cannot read properties of null (reading 'name')"}
+2026-01-24 13:20:30 RespErr: {"status":false,"message":"Internal server error","error":"Cannot read properties of null (reading 'name')"}
+2026-02-04 12:12:18 RespErr: {"status":false,"message":"Internal server error","error":"Cannot access 'globalBetData' before initialization"}
+2026-02-05 13:08:10 Resp: Repeated Bet}
+2026-02-05 13:08:14 Resp: Repeated Bet}
+2026-02-05 13:08:32 Resp: Repeated Bet}

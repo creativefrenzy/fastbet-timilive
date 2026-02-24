@@ -1,0 +1,37 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /home/ubuntu/fastbet-zeeplive
+
+permissions:
+  - object: /home/ubuntu/fastbet-zeeplive/scripts
+    pattern: "*.sh"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+    type:
+      - file
+
+hooks:
+  BeforeInstall:
+    - location: scripts/stop_server.sh
+      timeout: 120
+      runas: ubuntu
+
+  AfterInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 120
+      runas: ubuntu
+
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      timeout: 60
+      runas: ubuntu
+
+  ValidateService:
+    - location: scripts/validate_service.sh
+      timeout: 60
+      runas: ubuntu
+
