@@ -17,6 +17,9 @@ From your project directory (e.g. /var/www/html/node-bet)
 `cd /var/www/html/node-bet`
 `pm2 start src/index.js --name "node-bet" --node-args="--env-file=.env"`
 
+ If Node.js v20+ then
+`pm2 start src/index.js --name "fastbet-timilive"``
+
 Explanation:
   src/index.js → entry file of your app
   --name "node-bet" → gives your process a readable name
